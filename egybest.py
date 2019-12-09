@@ -1,9 +1,9 @@
-import logging
 import os
 import sys
 
 import requests
 from bs4 import BeautifulSoup
+from pySmartDL import SmartDL
 from selenium import webdriver
 
 
@@ -23,7 +23,8 @@ class EgyBest:
         self.downloadable_episodes_url_list = []
 
     def get_search_url(self):
-        self.search_url = self.search_base_url + self.get_string_input("What are you searching for ? :")
+        self.search_url = self.search_base_url + \
+                          self.get_string_input("What are you searching for ? :")
 
     def get_content_url(self):
         print("Searching for results !!!")
@@ -40,10 +41,12 @@ class EgyBest:
                       ", Type : ", content_type)
         while res:
             try:
-                self.content_url = res[self.get_int_input("Enter link number :") - 1]['href']
+                self.content_url = res[self.get_int_input(
+                    "Enter link number :") - 1]['href']
                 break
             except:
-                retry = self.get_string_input("Non valid input ,retry ? (y/n) :")
+                retry = self.get_string_input(
+                    "Non valid input ,retry ? (y/n) :")
                 if retry != "y":
                     self.content_type = None
                     return
@@ -56,15 +59,16 @@ class EgyBest:
             chrome_options.add_argument('log-level=3')
             # chrome_options.add_argument('--headless')
             self.chrome_driver = webdriver.Chrome(options=chrome_options)
-        except Exception as e:
-            logging.error(e)
+        except:
+            print("Could't initialize chrome , make sure to install it !!")
+            print(input("Hello"))
             sys.exit()
 
     def destroy_chrome_driver(self):
         try:
             self.chrome_driver.close()
         except Exception as e:
-            logging.error(e)
+            print(e)
 
     def start_download(self, url,
                        option: "Get download link 0,Append to IDM 1" = 1) -> "Returns the url":
@@ -76,7 +80,8 @@ class EgyBest:
         target_button.click()
         print("Accessing the download page")
         self.chrome_driver.close()
-        self.chrome_driver.switch_to.window(self.chrome_driver.window_handles[0])
+        self.chrome_driver.switch_to.window(
+            self.chrome_driver.window_handles[0])
         target_button = self.chrome_driver.find_element_by_xpath(
             "/html/body/div[1]/div/p[2]/a[1]")
         while 1:
@@ -86,20 +91,23 @@ class EgyBest:
                 if not target_button.get_attribute("href"):
                     print("Closing ads tab")
                     target_button.click()
-                    self.chrome_driver.switch_to.window(self.chrome_driver.window_handles[1])
+                    self.chrome_driver.switch_to.window(
+                        self.chrome_driver.window_handles[1])
                     self.chrome_driver.close()
-                    self.chrome_driver.switch_to.window(self.chrome_driver.window_handles[0])
+                    self.chrome_driver.switch_to.window(
+                        self.chrome_driver.window_handles[0])
                 else:
                     print("Obtaining the download link")
                     url = target_button.get_attribute("href")
                     if option == 1:
                         result = os.system(
-                            F'"C:\Program Files (x86)\Internet Download Manager\IDMan.exe" /d {url} /n /a')
+                            F'"C:\\Program Files (x86)\\Internet Download Manager\\IDMan.exe" /d {url} /n /a')
                         print("Couldn't add it" if result else "Added to IDM")
                     return url
             except Exception as e:
                 print("Exception ", e)
-                self.chrome_driver.switch_to.window(self.chrome_driver.window_handles[0])
+                self.chrome_driver.switch_to.window(
+                    self.chrome_driver.window_handles[0])
 
     def download_seasons(self, url=None):
         if url is None:
@@ -112,11 +120,13 @@ class EgyBest:
             choice = self.get_string_input(
                 "Do you want to download all seasons or specific ones, type['all' or 'spec']:")
             if choice == 'all':
-                self.chosen_seasons_numbers_list = [i for i in range(1, number_of_seasons + 1)]
+                self.chosen_seasons_numbers_list = [
+                    i for i in range(1, number_of_seasons + 1)]
                 break
             elif choice == 'spec':
                 while 1:
-                    chosen_number_seasons = self.get_int_input("Choose how many seasons :")
+                    chosen_number_seasons = self.get_int_input(
+                        "Choose how many seasons :")
                     try:
                         if number_of_seasons >= chosen_number_seasons > 0:
                             break
@@ -138,9 +148,8 @@ class EgyBest:
                             pass
                 break
             print("Non valid option")
-        chosen_seasons_url_list = []
-        for i in self.chosen_seasons_numbers_list:
-            self.chosen_seasons_url_list.append(seasons_list[-i]['href'])
+        for i in self.chosen_episodes_number_list.sort():
+            self.chosen_seasons_url_list.append(seasons_list[i]['href'])
 
         print("Gathering episodes Urls")
         print("chosen_seasons_url_list", self.chosen_seasons_url_list)
@@ -153,7 +162,8 @@ class EgyBest:
                 choice = self.get_string_input(
                     "Do you want to download all episodes or specific ones, type['all' or 'spec']:")
                 if choice == 'all':
-                    self.chosen_episodes_number_list = [i for i in range(1, number_of_eps + 1)]
+                    self.chosen_episodes_number_list = [
+                        i for i in range(1, number_of_eps + 1)]
                 elif choice == 'spec':
                     while 1:
                         chosen_number_episodes = self.get_int_input(
@@ -171,18 +181,20 @@ class EgyBest:
                             try:
                                 if number_of_eps >= choice >= 1:
                                     print(F"Episode {choice} Added")
-                                    self.chosen_episodes_number_list.append(choice)
+                                    self.chosen_episodes_number_list.append(
+                                        choice)
                                     break
                                 else:
                                     print("Non valid option")
                             except:
                                 pass
-
+            print("Eps list", episodes_list)
             print("chosen Ep list", self.chosen_episodes_number_list)
 
-            for i in range(1, len(self.chosen_episodes_number_list) + 1):
-                ep_link = episodes_list[-i]["href"]
-                self.downloadable_episodes_url_list.append(self.start_download(ep_link))
+            for i in self.chosen_episodes_number_list.sort():
+                ep_link = episodes_list[i]["href"]
+                self.downloadable_episodes_url_list.append(
+                    self.start_download(ep_link))
                 self.chosen_episodes_url_list.append(ep_link)
             print(self.downloadable_episodes_url_list)
             print(self.chosen_episodes_url_list)
@@ -198,10 +210,19 @@ class EgyBest:
             if self.content_type == "series":
                 self.download_seasons()
             elif self.content_type == "movie":
-                result = self.start_download(self.content_url)
-                print("Error " if not result else result)
-            choice = self.get_int_input("Do you want to restart ? : (1/0)")
-            if not choice: break
+
+                result = self.start_download(self.content_url, option=0)
+                if result:
+                    print(result)
+                    obj = SmartDL(result, "./Download")
+                    obj.start()
+                    print("Path to file :", obj.get_dest())
+            try:
+                choice = self.get_int_input("Do you want to restart ? : (1/0)")
+                if not choice:
+                    break
+            except:
+                break
         self.destroy_chrome_driver()
 
     @staticmethod
@@ -231,7 +252,8 @@ class EgyBest:
         return None
 
 
-egy = EgyBest()
-egy.init_chrome_driver()
-egy.start()
-egy.destroy_chrome_driver()
+if __name__ == "__main__":
+    # TODO check if the IDM is installed and ask user for download option ,add threads
+    egy = EgyBest()
+    egy.start()
+    egy.destroy_chrome_driver()
