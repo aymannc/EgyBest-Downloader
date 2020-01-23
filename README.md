@@ -8,7 +8,7 @@ but if you don't like using IDM or don't have it installed or activated(see belo
 you'll find the downland links on a file in the "LinkSaves" folder so you can download it 
 manually or by using the built in function
 
-### Prerequisites
+## Prerequisites
 * Working version of IDM [Internet download manager](https://www.internetdownloadmanager.com/download.html)
  installed on the default directory .
 ```
@@ -20,9 +20,7 @@ tool to reset the 30 days free trial .
 * You'll need python installed on a windows machine .
 * Latest version of google chrome (currently supporting chrome only).
 
-## Getting Started
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
-### Installing
+## Installing
 
 Clone the directory on your local machine  
 ```
