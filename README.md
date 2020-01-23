@@ -1,6 +1,6 @@
-# EgyBest Downloader
+# EgyBest Downloader (v 1.0)
 Download a film or a Tv series from Egybest without the annoying ads 
-
+- currently working on a gui verison 
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
