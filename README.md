@@ -1,22 +1,31 @@
 # EgyBest Downloader (v 1.0)
-Download a film or a Tv series from EgyBest without the annoying ads .
-* Currently working on a Gui version 
+Try to download `Supernatural` with its 316 episodes from EgyBest or any website, that's a lot of clicks and ads :( .
+
+**EgyBest Downloader** gives you the possibility to download any film or a Tv series from 
+EgyBest without the annoying ads .
+* ***Currently working on a Gui version*** 
 
 ## Important !!
-The goal from this script is to gather download links and add them to Internet download manager (IDM) ,
-but if you don't like using IDM or don't have it installed or activated(see below for solution ),
-you'll find the downland links on a file in the "LinkSaves" folder so you can download it 
-manually or by using the built in function
+* The goal from this programme is to gather download links for you .
+* You'll find the downloads link on a local file with the following format `type-name-year.txt`  in the "LinkSaves" folder.
 
+* You can add the links automatically to Internet download manager (IDM) and download them ,but if you don't like using 
+IDM or don't have it installed or activated(see Prerequisites for a solution),
+you can use the built in command line downloader or you can copy all the links and use `add batch download from clipboard` 
+on your favorite download manager .
+
+.
 ## Prerequisites
-* Working version of IDM [Internet download manager](https://www.internetdownloadmanager.com/download.html)
+* To activate expired versions of IDM use [idm-trial-reset](https://github.com/J2TeaM/idm-trial-reset/releases/tag/v1.0.0) 
+tool to reset the 30 days free trial .
+
+* For the IDM functionalities you'll need IDM [Internet download manager](https://www.internetdownloadmanager.com/download.html)
  installed on the default directory .
 ```
 C:\Program Files (x86)\Internet Download Manager
  ```
- or you can change it inside the code .
-* To activate expired versions of IDM use [idm-trial-reset](https://github.com/J2TeaM/idm-trial-reset/releases/tag/v1.0.0) 
-tool to reset the 30 days free trial .
+ or you can change the path inside the code .
+
 * You'll need python installed on a windows machine .
 * Latest version of google chrome (currently supporting chrome only).
 
@@ -30,6 +39,11 @@ After cloning the project,install the "requirements.txt" on your virtualenv
 
 ```
 pip install -r requirements.txt
+```
+## Running the programme
+* Open the cmd on the containing folder and use 
+```
+(myenv) D:\EgyBest_1.0> python egybest.py
 ```
 ## Built With
 
@@ -48,3 +62,7 @@ This project is licensed under the MIT License
 ## Acknowledgments
 
 * Thank you EgyBest for the hard work you provide
+
+## Q & A
+
+soon

@@ -244,6 +244,8 @@ class EgyBest:
             self.chosen_episodes_url_list.append(self.content_url if not valid_link else link)
             # print(self.chosen_episodes_url_list)
             self.gather_download_link()
+
+        self.save_links_to_file()
         self.get_user_download_choice()
 
     @staticmethod
@@ -295,25 +297,20 @@ class EgyBest:
             'btn.g.dl.nop._open_window')[0]
         target_button.click()
 
-    def get_user_download_choice(self, ):
+    def get_user_download_choice(self):
+        print("Links saved to file")
         while 1:
             choice = self.get_string_input(
-                "Do you want to start [d]ownloading ,[a]ppend to IDM or [s]ave links to local file?"
-                ",chose: (d/a/s)")
+                "Do you want to start [d]ownloading ,[a]ppend to IDM or [q]uit?,chose: (d/a/q)")
             if choice == "d":
                 self.start_downloading()
                 break
-            elif choice == "a":
+            if choice == "a":
                 self.append_to_idm()
                 break
-            elif choice == "s":
-                self.save_links_to_file()
+            if choice == "q":
                 break
-            else:
-                choice = self.get_string_input("None valid option do you want to quit ?,chose: (q)")
-                if choice == "q":
-                    self.destroy_chrome_driver()
-                    break
+            print("None valid option !")
 
     def start_downloading(self):
         print("Note : if your're using pycharm console, it won't show you progress bar !")
@@ -334,7 +331,6 @@ class EgyBest:
             except Exception as excep:
                 print(F"Couldn't add {self.chosen_episodes_url_list[i]} \nException :{excep}")
         print("Saving them to a file !")
-        self.save_links_to_file()
 
     def save_links_to_file(self):
         base_dic = "LinkSaves/"
