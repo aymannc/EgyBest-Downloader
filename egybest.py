@@ -44,7 +44,7 @@ class EgyBest:
             try:
                 content_type = self.get_url_type(link['href']).upper()
                 print(i, " ->", link.contents[4].text, ", Type : ", content_type, ",", "IMDB Rating :",
-                      link.contents[0].i.i.text)
+                      link.contents[0].i.i.text,'\n')
             except:
                 print(i, " ->", link.contents[2].text,
                       ", Type : ", content_type)
@@ -74,8 +74,9 @@ class EgyBest:
                 caps = DesiredCapabilities().CHROME
                 caps["pageLoadStrategy"] = "eager"
                 chrome_options = webdriver.ChromeOptions()
-                chrome_options.add_argument('info-level=3')
-                chrome_options.add_argument('--headless')
+                # chrome_options.add_argument('--log-level=3')
+                # chrome_options.add_argument('--disable-logging')
+                # chrome_options.add_argument('--headless')
                 self.chrome_driver = webdriver.Chrome(executable_path="./Driver/chromedriver.exe",
                                                       options=chrome_options)
             except:
@@ -170,15 +171,14 @@ class EgyBest:
         self.chosen_seasons_numbers_list.sort()
         for i in self.chosen_seasons_numbers_list:
             self.chosen_seasons_url_list.append(seasons_list[-i]['href'])
-        # TODO strat here of download all option
         print("Gathering episodes Urls")
-        print("chosen_seasons_url_list", self.chosen_seasons_url_list)
+        # print("chosen_seasons_url_list", self.chosen_seasons_url_list)
         for url in self.chosen_seasons_url_list:
             res = self.get_bs4_result(url, "div", "movies_small")[0]
             episodes_list = res.find_all("a")
             number_of_eps = len(episodes_list)
             if number_of_eps:
-                print(F"There're {number_of_eps} episodes ")
+                print(F"There're {number_of_eps} episodes in {' '.join(url.split('/')[-2].split('-')[1:])}")
                 if all_eps:
                     choice = 'all'
                 else:
@@ -298,10 +298,10 @@ class EgyBest:
         target_button.click()
 
     def get_user_download_choice(self):
-        print("Links saved to file")
         while 1:
             choice = self.get_string_input(
-                "Do you want to start [d]ownloading ,[a]ppend to IDM or [q]uit?,chose: (d/a/q)")
+                "---> Links saved to file , Do you want to start [d]ownloading ,[a]ppend to IDM or [q]uit?,"
+                "chose: (d/a/q)")
             if choice == "d":
                 self.start_downloading()
                 break

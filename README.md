@@ -1,7 +1,11 @@
-# EgyBest Downloader (v 1.0)
+# EgyBest Downloader (v 1.0.1)
+<p align="center">
+  <img src="https://lh3.googleusercontent.com/M9p9EOCX0Hi0EjHwvfFa34mPjIZmpAc2LLqSbW3I-4jnQCGnolHMo1uncSJuG12cQg" height="100" title="hover text">
+</p>
+
 Try to download `Supernatural` with its 316 episodes from EgyBest or any website, that's a lot of clicks and ads :( .
 
-**EgyBest Downloader** gives you the possibility to download any film or a Tv series from 
+**EgyBest Downloader** gives you the possibility to download any movie or a Tv series from 
 EgyBest without the annoying ads .
 * ***Currently working on a Gui version*** 
 
