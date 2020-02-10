@@ -1,6 +1,6 @@
 # EgyBest Downloader (v 1.0.2)
 <p align="center">
-  <img src="https://lh3.googleusercontent._com/M9p9EOCX0Hi0EjHwvfFa34mPjIZmpAc2LLqSbW3I-4jnQCGnolHMo1uncSJuG12cQg" height="100" title="EgyBest logo">
+  <img src="screens/logo.png" height="100px" title="EgyBest logo">
 </p>
 
 Try to download `Supernatural` with its 316 episodes from EgyBest or any website, that's a lot of clicks and ads :( .
