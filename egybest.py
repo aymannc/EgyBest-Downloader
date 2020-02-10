@@ -11,8 +11,10 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 class EgyBest:
     search_base_url = "https://nero.egybest.site/explore/?q="
     chrome_driver = None
+    available_qualities = ['1080', '720', '480', '360', '240']
 
     def __init__(self):
+        self.default_quality = "1080"
         self.search_url = None
         self.content_url = None
         self.content_type = None
@@ -38,13 +40,13 @@ class EgyBest:
     def get_content_url(self):
         print("Searching for results !!!")
         res = self.get_bs4_result(self.search_url, "a", "movie")
-        # Displaying the fitched linked
+        # Displaying the fetched linked
         for i, link in enumerate(res, 1):
             content_type = None
             try:
                 content_type = self.get_url_type(link['href']).upper()
                 print(i, " ->", link.contents[4].text, ", Type : ", content_type, ",", "IMDB Rating :",
-                      link.contents[0].i.i.text,'\n')
+                      link.contents[0].i.i.text, '\n')
             except:
                 print(i, " ->", link.contents[2].text,
                       ", Type : ", content_type)
@@ -74,13 +76,13 @@ class EgyBest:
                 caps = DesiredCapabilities().CHROME
                 caps["pageLoadStrategy"] = "eager"
                 chrome_options = webdriver.ChromeOptions()
-                # chrome_options.add_argument('--log-level=3')
+                chrome_options.add_argument('--log-level=3')
                 # chrome_options.add_argument('--disable-logging')
                 # chrome_options.add_argument('--headless')
                 self.chrome_driver = webdriver.Chrome(executable_path="./Driver/chromedriver.exe",
                                                       options=chrome_options)
-            except:
-                print("Couldn't init chrome drivers")
+            except Exception as e:
+                print("Couldn't init chrome drivers" + str(e))
                 self.exit("init_chrome")
 
     # closing and destroying chrome driver instant
@@ -99,10 +101,11 @@ class EgyBest:
         print("Accessing EgyBest page")
         self.chrome_driver.get(self.chosen_episodes_url_list[-1])
         self.chose_quality()
+        for handler in self.chrome_driver.window_handles:
+            self.chrome_driver.switch_to.window(handler)
+            if "vidstream" not in self.chrome_driver.current_url:
+                self.chrome_driver.close()
         print("Accessing the download page")
-        self.chrome_driver.close()
-        self.chrome_driver.switch_to.window(
-            self.chrome_driver.window_handles[0])
         while 1:
             try:
                 target_button = self.chrome_driver.find_element_by_xpath(
@@ -223,6 +226,7 @@ class EgyBest:
         return True
 
     def start(self, link=None):
+        self.chose_default_quality()
         # Check if link provided is valid
         valid_link = False
         if link:
@@ -287,33 +291,51 @@ class EgyBest:
             print("None valid link in get_content_name")
         return None
 
-    def exit(self, code):
-
+    def exit(self, code="!"):
         self.destroy_chrome_driver()
         sys.exit("\n Exited " + code)
 
     def chose_quality(self):
-        target_button = self.chrome_driver.find_elements_by_class_name(
-            'btn.g.dl.nop._open_window')[0]
-        target_button.click()
+        try:
+            labels = self.chrome_driver.find_elements_by_xpath('//*[@id="watch_dl"]/table/tbody/tr')
+            index = None
+            for i, label in enumerate(labels, 1):
+                if self.default_quality in label.text:
+                    index = i
+                    break
+            if index is not None:
+                self.chrome_driver.find_element_by_xpath(
+                    F'//*[@id="watch_dl"]/table/tbody/tr[{index}]/td[4]/a[1]').click()
+            else:
+                self.chrome_driver.find_element_by_xpath(
+                    F'//*[@id="watch_dl"]/table/tbody/tr[1]/td[4]/a[1]').click()
+        except Exception as e:
+            print(e)
+            try:
+                _ = self.chrome_driver.find_elements_by_class_name('msg_box.error.table.full')[0]
+                print("There are no available download links !")
+            except Exception as e:
+                print("Some changes were made to EgyBest website please check for an update")
+            self.exit()
 
     def get_user_download_choice(self):
         while 1:
             choice = self.get_string_input(
-                "---> Links saved to file , Do you want to start [d]ownloading ,[a]ppend to IDM or [q]uit?,"
-                "chose: (d/a/q)")
-            if choice == "d":
+                "---> Links saved to file , do you want to play it on [v]lc, start [d]ownloading ,[a]ppend to IDM or [q]uit?,"
+                "chose: (v/d/a/q)")
+            if choice == "v":
+                self.append_to_vlc()
+            elif choice == "d":
                 self.start_downloading()
-                break
-            if choice == "a":
+            elif choice == "a":
                 self.append_to_idm()
+            elif choice == "q":
                 break
-            if choice == "q":
-                break
-            print("None valid option !")
+            else:
+                print("None valid option !")
 
     def start_downloading(self):
-        print("Note : if your're using pycharm console, it won't show you progress bar !")
+        print("Note : if your're using pycharm console, it won't show you the progress bar !")
         if not self.downloadable_episodes_url_list:
             print("Array is empty")
         for i, ep_link in enumerate(self.downloadable_episodes_url_list):
@@ -330,7 +352,6 @@ class EgyBest:
                 print("+1 :", ep_link)
             except Exception as excep:
                 print(F"Couldn't add {self.chosen_episodes_url_list[i]} \nException :{excep}")
-        print("Saving them to a file !")
 
     def save_links_to_file(self):
         base_dic = "LinkSaves/"
@@ -344,13 +365,51 @@ class EgyBest:
         self.destroy_chrome_driver()
         self.init_chrome_driver()
 
+    def append_to_vlc(self):
+        for i, ep_link in enumerate(self.downloadable_episodes_url_list):
+            try:
+                cmd = F'"C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe" --playlist-enqueue "{link}"'
+                # print(cmd)
+                os.system(F'cmd /c "{cmd}"')
+                # print("done")
+            except Exception as excep:
+                print(F"Couldn't add {self.chosen_episodes_url_list[i]} \nException :{excep}")
+
+    def chose_default_quality(self):
+        response = self.get_string_input(
+            F"The default quality is {self.default_quality} do you want to change it ?(y/n)")
+        if response not in ("n", "no"):
+            response = ""
+            while response not in self.available_qualities:
+                response = self.get_string_input(F"chose a quality from : {self.available_qualities}")
+            self.default_quality = response
+
+
+def check_for_updates(version):
+    print('locking for updates ,please wait !')
+    github_url = 'https://github.com/aymannc/EgyBest-Downloader'
+    r = requests.get(github_url)
+    soup = BeautifulSoup(r.text, "html.parser")
+    try:
+        github_version = soup.select_one("#readme > div.Box-body > article > h1").text.split('v')[1][1:-1]
+        if github_version != version:
+            raise Exception(F"You have version {version} of the code please update to {github_version}!")
+        else:
+            print('Up to date !')
+    except Exception as e:
+        exit(e)
+
 
 if __name__ == "__main__":
+    current_version = '1.0.2'
+    check_for_updates(current_version)
     egy = EgyBest()
     link = "https://nero.egybest.site/movie/joker-2019/"
     try:
         while 1:
-            egy.start()
+            # egy.start()
+            # OR :
+            # egy.start(link=link)
             try:
                 choice = egy.get_int_input("Do you want to restart ? : (1/0)")
                 if choice == 0:

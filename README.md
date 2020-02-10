@@ -1,6 +1,6 @@
-# EgyBest Downloader (v 1.0.1)
+# EgyBest Downloader (v 1.0.2)
 <p align="center">
-  <img src="https://lh3.googleusercontent.com/M9p9EOCX0Hi0EjHwvfFa34mPjIZmpAc2LLqSbW3I-4jnQCGnolHMo1uncSJuG12cQg" height="100" title="hover text">
+  <img src="https://lh3.googleusercontent._com/M9p9EOCX0Hi0EjHwvfFa34mPjIZmpAc2LLqSbW3I-4jnQCGnolHMo1uncSJuG12cQg" height="100" title="EgyBest logo">
 </p>
 
 Try to download `Supernatural` with its 316 episodes from EgyBest or any website, that's a lot of clicks and ads :( .
@@ -8,7 +8,11 @@ Try to download `Supernatural` with its 316 episodes from EgyBest or any website
 **EgyBest Downloader** gives you the possibility to download any movie or a Tv series from 
 EgyBest without the annoying ads .
 * ***Currently working on a Gui version*** 
+## What's new 
+* (v 1.0.2) : updating the search and ad closing algorithm, adding `Chose quality` option . 
 
+* (v 1.1.0 ) :Soon,adding vlc online streaming option ,chose eps by range ,Jupiter lab for better visualisation 
+and a beginners friendly demo for installing and running the code. 
 ## Important !!
 * The goal from this programme is to gather download links for you .
 * You'll find the downloads link on a local file with the following format `type-name-year.txt`  in the "LinkSaves" folder.
