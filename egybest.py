@@ -78,7 +78,7 @@ class EgyBest:
                 chrome_options = webdriver.ChromeOptions()
                 chrome_options.add_argument('--log-level=3')
                 # chrome_options.add_argument('--disable-logging')
-                # chrome_options.add_argument('--headless')
+                chrome_options.add_argument('--headless')
                 self.chrome_driver = webdriver.Chrome(executable_path="./Driver/chromedriver.exe",
                                                       options=chrome_options)
             except Exception as e:
