@@ -407,7 +407,7 @@ if __name__ == "__main__":
     link = "https://nero.egybest.site/movie/joker-2019/"
     try:
         while 1:
-            # egy.start()
+            egy.start()
             # OR :
             # egy.start(link=link)
             try:
