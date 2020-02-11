@@ -19,7 +19,7 @@ and a beginners friendly demo for installing and running the code.
 
 * You can add the links automatically to Internet download manager (IDM) and download them ,but if you don't like using 
 IDM or don't have it installed or activated(see Prerequisites for a solution),
-you can use the built in command line downloader or you can copy all the links and use `add batch download from clipboard` 
+you can use the built in command line downloader, or you can copy all the links and use `add batch download from clipboard` 
 on your favorite download manager .
 
 .
@@ -35,24 +35,33 @@ C:\Program Files (x86)\Internet Download Manager
  or you can change the path inside the code .
 
 * You'll need python installed on a windows machine .
-* Latest version of google chrome (currently supporting chrome only).
+* The Latest version of google chrome (currently supporting chrome only).
 
-## Installing
-
-Clone the directory on your local machine  
-```
-git clone https://github.com/aymannc/EgyBest-Downloader
- ```
-After cloning the project,install the "requirements.txt" on your virtualenv
-
-```
-pip install -r requirements.txt
-```
+## Installing (Beginners friendly !)
+1. The first step is to install Python ,this video will show you how :
+[![How to install python](http://img.youtube.com/vi/4Rx_JRkwAjY/0.jpg)](https://www.youtube-nocookie.com/embed/4Rx_JRkwAjY?start=0&end=249 "How to install python")
+1. The next step is to download or clone th project from github :
+    * Download the source code as a zip folder :
+        ![Download Screen](/screens/download_screen.jpg)
+    *  Or clone the directory on your local machine (if you have git installed )
+        ```
+        git clone https://github.com/aymannc/EgyBest-Downloader
+         ```
+1. Now is the time to install the requirements for the project :
+    1. Open the commande line in the downloaded folder ,this is a video:
+        [![How to open cmd](http://img.youtube.com/vi/bgSSJQolR0E/0.jpg)](https://www.youtube-nocookie.com/embed/bgSSJQolR0E "How to open cmd")
+    1. Past the following command in cmd :
+        ```
+        pip install -r requirements.txt
+        ```
+       ![Cmd Screen](/screens/cmd_screen.png)
+       
+If everything went right ,now you have a working version of the project.
 ## Running the programme
-* Open the cmd on the containing folder and use 
-```
-(myenv) D:\EgyBest_1.0> python egybest.py
-```
+* Open the cmd on the containing folder and past the following line (see above if you don't know how to open cmd !):
+    ```
+    python egybest.py
+    ```
 ## Built With
 
 * [Beautifulsoup4](https://www.crummy.com/software/BeautifulSoup/) - Python library designed for quick turnaround projects like screen-scraping

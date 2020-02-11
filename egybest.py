@@ -381,7 +381,7 @@ class EgyBest:
         if response not in ("n", "no"):
             response = ""
             while response not in self.available_qualities:
-                response = self.get_string_input(F"chose a quality from : {self.available_qualities}")
+                response = self.get_string_input(F"chose a quality from : {self.available_qualities} : ")
             self.default_quality = response
 
 
