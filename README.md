@@ -40,6 +40,7 @@ C:\Program Files (x86)\Internet Download Manager
 * First of all, activate your expired versions of IDM using [idm-trial-reset](https://github.com/J2TeaM/idm-trial-reset/releases/tag/v1.0.0) tool to reset the 30 days free trial ,then start the installation process.
 
 1.Install Python ,this video will show you how :
+
 [![How to install python](http://img.youtube.com/vi/4Rx_JRkwAjY/0.jpg)](https://www.youtube-nocookie.com/embed/4Rx_JRkwAjY?start=0&end=249 "How to install python")
 
 1. The next step is to download or clone th project from github :
