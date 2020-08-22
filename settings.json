@@ -1,0 +1,13 @@
+{
+   "chrome_driver_location": "driver\\chrome.exe",
+   "default_quality": "480",
+   "available_qualities": [
+      "1080",
+      "720",
+      "480",
+      "360",
+      "240"
+   ],
+   "first_run": false,
+   "setting_file_name": "settings.json"
+}
