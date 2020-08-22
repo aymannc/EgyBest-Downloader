@@ -1,5 +1,7 @@
-
 from Core.appConfigurator import get_string_input
+from bs4 import BeautifulSoup
+import requests
+from termcolor import cprint
 def start(self, link=None):
         valid_link = False
         if link:
@@ -25,19 +27,27 @@ def start(self, link=None):
         self.save_links_to_file()
         self.get_user_download_choice()
 
+def get_bs4_result(url, html_tag, class_name):
+        print("Requesting link !")
+        print(url)
+        r = requests.get(url)
+        soup = BeautifulSoup(r.text, "html.parser")
+        print(r)
+        return soup.find_all(html_tag, class_=class_name)
+
 
 def get_search_url(self):
         try:
             self.search_url = self.search_base_url + \
                               get_string_input("What are you searching for ? :")
-            # print(self.search_url)
+            print(self.search_url)
         except:
             exit("search url")
 
     # function to get the download content
 def get_content_url(self):
         print("Searching for results !!!")
-        res = self.get_bs4_result(self.search_url, "a", "movie")
+        res = get_bs4_result(self.search_url, "a", "movie")
         # Displaying the fetched linked
         for i, link in enumerate(res, 1):
             content_type = None

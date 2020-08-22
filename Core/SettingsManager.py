@@ -6,6 +6,7 @@ from termcolor import colored, cprint
 
 class SettingsManager:
     search_base_url = "https://nero.egybest.site/explore/?q="
+    base_url ="https://nero.egybest.site/"
     available_qualities = ['1080', '720', '480', '360', '240']
     chrome_drive =None
     settings = {}
@@ -40,6 +41,7 @@ class SettingsManager:
                 json_settings = json.loads(settings_file.read())
                 for key in json_settings:
                     cprint(key+":"+str(json_settings[key]),"green")
+                self.default_quality = json_settings["default_quality"]
             
     def run_app_configurator(self):
         #Choose default quality for scrapping links
