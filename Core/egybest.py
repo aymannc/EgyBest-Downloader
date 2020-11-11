@@ -73,8 +73,8 @@ class EgyBest:
             self.chosen_episodes_url_list.append(self.content_url)
             self.gather_download_link()
 
-        self.save_links_to_file()
-        self.get_user_download_choice()
+        file_name = self.save_links_to_file()
+        self.get_user_download_choice(file_name)
 
     def get_link_from_keyword(self, mode: Mode = Mode.AUTO_COMPLETE) -> Tuple[str, Mode]:
         """ Generate the page link from the user's input"""
@@ -504,11 +504,12 @@ class EgyBest:
                 raise NotImplementedError("Some changes were made to EgyBest website please check for an update")
             self.exit()
 
-    def get_user_download_choice(self):
+    def get_user_download_choice(self, file_name):
         while 1:
+            cprint(f"\n--->Links saved to {file_name.replace('//', '/')}", "blue")
             choice = self.get_string_input(
-                "---> Links saved to file , do you want to start [d]ownloading ,[a]ppend to IDM or [q]uit?,"
-                "chose: (v/d/a/q)")
+                "--->Do you want to start [d]ownloading ,[a]ppend to IDM or [q]uit?,"
+                "chose: (d/a/q)")
             # if choice == "v":
             #     self.append_to_vlc()
             if choice == "d":
@@ -541,13 +542,15 @@ class EgyBest:
             except Exception as excep:
                 print(F"Couldn't add {self.chosen_episodes_url_list[i]} \nException :{excep}")
 
-    def save_links_to_file(self):
+    def save_links_to_file(self) -> str:
+        # ToDo : Change the download folder to conf file
         base_dic = "LinkSaves/"
         os.makedirs(os.path.dirname(base_dic), exist_ok=True)
-        # print(self.downloadable_episodes_url_list)
-        with open(F"{base_dic}/{self.content_type}-{self.content_name}.txt", "w+") as f:
+        file_name = F"{base_dic}/{self.content_type}-{self.content_name}.txt"
+        with open(file_name, "w") as f:
             for ep in self.downloadable_episodes_url_list:
                 f.write(F"{ep}\n")
+        return file_name
 
     def reset_chrome_driver(self):
         self.destroy_chrome_driver()

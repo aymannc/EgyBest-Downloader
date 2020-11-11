@@ -21,6 +21,7 @@ if __name__ == "__main__":
     egy = EgyBest(settings_manager.get_settings_dictionary())
     while True:
         # ToDo : save VidStream links in SQLite db, so we won't have to scrape EgyBest each time
+        # ToDo : make a bash file for env conf
         try:
             egy.start()
         except requests.exceptions.ConnectionError:
