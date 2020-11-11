@@ -1,0 +1,15 @@
+{
+  "current_version" : "1.0.2",
+  "github_url": "https://github.com/aymannc/EgyBest-Downloader",
+  "base_url": "https://nero.egybest.site/",
+  "auto_complete_url": "autoComplete.php?q=",
+  "search_base_url": "explore/?output_format=json&output_mode=movies_list&page=#&q=*",
+  "available_qualities": [
+    "1080",
+    "720",
+    "480",
+    "360",
+    "240"
+  ],
+  "setting_file_name": "settings.json"
+}

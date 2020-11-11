@@ -1,7 +1,6 @@
-# EgyBest Downloader (v 1.0.2)
-<p align="center">
-  <img src="screens/logo.png" height="100px" title="EgyBest logo">
-</p>
+# EgyBest Downloader (v 1.1.0)
+
+![EgyBest logo](img/logo.png)
 
 Try to download `Supernatural` with its 316 episodes from EgyBest or any website, that's a lot of clicks and ads :( .
 
@@ -11,8 +10,7 @@ EgyBest without the annoying ads .
 ## What's new 
 * (v 1.0.2) : updating the search and ad closing algorithm, adding `Chose quality` option . 
 
-* (v 1.1.0 ) :Soon,adding vlc online streaming option ,chose eps by range ,Jupiter lab for better visualisation 
-and a beginners friendly demo for installing and running the code. 
+* (v 1.1.0 ) : Fixing major bugs and improving code quality.
 ## Important !!
 * The goal from this programme is to gather download links for you .
 * You'll find the downloads link on a local file with the following format `type-name-year.txt`  in the "LinkSaves" folder.
@@ -39,13 +37,12 @@ C:\Program Files (x86)\Internet Download Manager
 
 * First of all, activate your expired versions of IDM using [idm-trial-reset](https://github.com/J2TeaM/idm-trial-reset/releases/tag/v1.0.0) tool to reset the 30 days free trial ,then start the installation process.
 
-1.Install Python ,this video will show you how :
-
+1. Install Python ,this video will show you how :
 [![How to install python](http://img.youtube.com/vi/4Rx_JRkwAjY/0.jpg)](https://www.youtube-nocookie.com/embed/4Rx_JRkwAjY?start=0&end=249 "How to install python")
 
 1. The next step is to download or clone th project from github :
     * Download the source code as a zip folder :
-        ![Download Screen](/screens/download_screen.jpg)
+        ![Download Screen](img/download_screen.jpg)
     *  Or clone the directory on your local machine (if you have git installed )
         ```
         git clone https://github.com/aymannc/EgyBest-Downloader
@@ -57,7 +54,7 @@ C:\Program Files (x86)\Internet Download Manager
         ```
         pip install -r requirements.txt
         ```
-       ![Cmd Screen](/screens/cmd_screen.png)
+       ![Cmd Screen](img/cmd_screen.png)
        
 If everything went right ,now you have a working version of the project.
 ## Running the programme

@@ -1,66 +1,33 @@
-from Core.UpdateChecker import check_for_updates
-from Core.SettingsManager import SettingsManager
-import json
-import Core.contentsearch as searcher 
 import requests
 from termcolor import cprint
-from slack import WebClient
-import os
-import time
 
-
+from Core.egybest import EgyBest
+from Core.settings_manager import SettingsManager
 
 if __name__ == "__main__":
 
+    # initiate Settings Manager class
+    settings_manager = SettingsManager()
+    # check for the proprieties.json file
+    settings_manager.check_for_proprieties_file()
 
-    client = WebClient(token='xoxb-1329250213920-1305440281394-zZo4oxvoptqBu3SrbvRx3oWJ')
+    # check for updates and if the website is up and running
 
-    def test_egy_best(base_url):
-        response = requests.get(base_url)
-        if response.status_code == 200:
-                cprint("Egybest website is available","green")
-                client.chat_postMessage(channel ="#general", text="Egybest is up and runing")
-        else:
-                cprint("Egybest website is down","red")
-                #client.chat_postMessage(channel ="#general", text="Egybest is down")
-                #exit(cprint("App is not usable without egybest website up and runing","red"))
+    settings_manager.check_for_connectivity_and_updates()
 
-    #initate Settings Manager class
-    SettingsManager = SettingsManager()
+    # check if the settings file is Available
+    settings_manager.check_for_saved_settings()
 
-    
+    egy = EgyBest(settings_manager.get_settings_dictionary())
     while True:
-        #Test connnectivity to egybest 
-        test_egy_best(SettingsManager.base_url)
-        time.sleep(60)
-    #check if Json Settings is Available
-    SettingsManager.check_for_settings_Json()
-
-    searcher.start(SettingsManager)
-    
-
-
-    #initatne Egybest scrapper class
-    
-    # egy = EgyBest()
-    # #check for updates on the original github repository
-    # check_for_updatens(egy.current_version)
-    
-    
-
-    # # link = "https://nero.egybest.site/movie/joker-2019/"480
-    # try:
-    #     while 1:
-    #         egy.start()
-    #         try:
-    #             choice = egy.get_int_input("Do you want to restart ? : (1/0)")
-    #             if choice == 0:
-    #                 break
-    #             egy.reset()
-    #         except:
-    #             break
-    # except Exception as e:
-    #     egy.reset_chrome_driver()
-    #     print(e)
-    # finally:
-    #     egy.destroy_chrome_driver()
+        # ToDo : save VidStream links in SQLite db, so we won't have to scrape EgyBest each time
+        try:
+            egy.start()
+        except requests.exceptions.ConnectionError:
+            cprint("\nError,please check your internet connection then press Enter!! #code:2", "red")
+            input()
+        except Exception as e:
+            cprint("\n" + str(e), "red")
+            choice = EgyBest.get_string_input("\nDo you want to restart ? ([n,no] / yes : any key)", "blue")
+            if choice in ('n', 'no'):
+                egy.exit()
