@@ -60,7 +60,7 @@ If everything went right ,now you have a working version of the project.
 ## Running the programme
 * Open the cmd on the containing folder and past the following line (see above if you don't know how to open cmd !):
     ```
-    python egybest.py
+    python main.py
     ```
 ## Built With
 
