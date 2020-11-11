@@ -204,7 +204,8 @@ class EgyBest:
 
                 chrome_options.add_argument('--incognito')
                 chrome_options.add_argument('--headless')
-                chrome_options.add_argument('--log-level=OFF')
+                chrome_options.add_argument('--log-level=3')
+                chrome_options.add_argument('--silent')
 
                 self.chrome_driver = webdriver.Chrome(executable_path=self.chrome_driver_location,
                                                       options=chrome_options)
