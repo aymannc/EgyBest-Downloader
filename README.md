@@ -1,4 +1,4 @@
-# EgyBest Downloader (v 1.1.3)
+# EgyBest Downloader (v 1.1.4)
 
 ![EgyBest logo](img/logo.png)
 

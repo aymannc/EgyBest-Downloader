@@ -1,11 +1,13 @@
 import requests
+from colorama import init
 from termcolor import cprint
 
 from Core.egybest import EgyBest
 from Core.settings_manager import SettingsManager
 
 if __name__ == "__main__":
-
+    # use Colorama to make Termcolor work on Windows too
+    init()
     # initiate Settings Manager class
     settings_manager = SettingsManager()
     # check for the proprieties.json file
